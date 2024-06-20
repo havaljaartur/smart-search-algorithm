@@ -1,0 +1,103 @@
+Smart search algorithm
+Implement an algorithm that given a searchTerm: string is able to extract a group of entities from it. There are 4 types of entities: cities, brands, dish types and diets.
+
+Import all these entities into a Postgres relational database. Use a separate table for each entity type. 
+
+Use database migrations to create your database structure, and database seeds to pre-populate it with the data provided.
+
+You will need to implement the function extractEntities(searchTerm) that takes a searchTerm argument and returns an array of objects containing the different entity combinations identified in the search term.
+
+Examples
+
+For searchTerm=; the function should return:
+[{ 
+brand: {id: 4, name: "McDonald's"}
+}]
+
+For searchTerm=McDonald's in London the function should return:
+[{ 
+city: {id: 1, name: "London"},
+brand: {id: 4, name: "McDonald's"}
+}]
+
+For searchTerm=vegan sushi in London the function should return:
+[{ 
+city: {id: 1, name: "London"},
+diet: {id: 1, name: "Vegan"},
+dishType: {id: 72, name: "Sushi"}
+},
+{ 
+city: {id: 1, name: "London"},
+diet: {id: 1, name: "Vegan"},
+brand: {id: 15, name: "Sushimania"}
+}]
+
+The examples above are just examples. The algorithm should work properly for any other type of combinations.
+No more than one of a kind
+A combination should have only a single entity of a specific type (e.g. a combination can not have two diets).
+
+If multiple entities of the same type are identified in the searchTerm then multiple combinations will be produced.
+
+Examples
+
+For searchTerm=veg london, the string veg can match both the Vegan and Vegetarian diet.
+The function will return two different combinations:
+
+[{ 
+diet: {id: 1, name:"Vegan"},
+city: {id: 1, name: "London"}
+},
+{ 
+diet: {id: 2, name:"Vegatarian"},
+city: {id: 1, name: "London"}
+}]
+
+For searchTerm=McDonald’s in London or Manchester multiple cities can be identified, so the function will return:
+
+[{ 
+city: {id: 1, name: 'London'},
+brand: {id: 4, name: "McDonald's"}
+},
+{ 
+city: {id: 6, name: 'Manchester'},
+brand: {id: 4, name: "McDonald's"}
+}]
+A word can match a single entity
+For a specific combination a word can match a single entity.
+
+Examples
+For searchTerm=sushi in london, the string sushi can match both the dish type Sushi and the brand Sushimania. These two should not be combined, since they were matched by the same word. Instead two different combination will be produced:
+
+
+[{ 
+city: {id: 1, name: "London"},
+dishType: {id: 72, name: "Sushi"}
+},
+{ 
+city: {id: 1, name: "London"},
+brand: {id: 15, name: "Sushimania"}
+}]
+
+Constraints
+For the optimal performance, your function must make a single query to the database every time it is called.
+
+Also, you should not load all cities, brands, dish types and diets into memory. 
+In the real world scenario there could be hundreds of thousands of them (especially brands).
+Delivering the code
+Your code must be modular, clean and easy to understand. Make sure to properly separate concerns, use suggestive names, etc. We are particularly interested in all these aspects.
+
+There is no need to implement a UI for the challenge.
+
+Please share your code within a public Github repository.
+Explain in a Readme file how to run your code.
+Timeline
+The challenge should take around 4-5h, but you are welcome to spend more time on it if you want to perfect your solution. The challenge must be submitted within 24h after receiving it.
+
+If you have ideas of how to improve your algo further, please share them in the Readme file of your repository.
+Notes
+For details that the document does not specify, just use your own judgment and decide based on what you think makes the most sense. We are interested to see how you think.
+
+
+If you are not familiar with Postgres, don’t worry. It’s very similar to other relational databases, and especially for this challenge you’ll be able to adapt to it quickly.
+
+When doing technical challenges, everyone gets a bit nervous. There is no reason to. We want you to enjoy building this algo. Have fun coding!
